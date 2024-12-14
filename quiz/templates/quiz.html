@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #c2e9fb);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 15px 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        input[type="radio"] {
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        label {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        label:hover {
+            background-color: #0056b3;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Question</h1>
+        <form method="POST" action="{% url 'submit_answer' session_id=session_id %}">
+            {% csrf_token %}
+            <p>{{ question.question_text }}</p>
+            <div class="options">
+                <input type="radio" id="optionA" name="answer" value="A" required>
+                <label for="optionA">{{ question.option_a }}</label>
+
+                <input type="radio" id="optionB" name="answer" value="B">
+                <label for="optionB">{{ question.option_b }}</label>
+
+                <input type="radio" id="optionC" name="answer" value="C">
+                <label for="optionC">{{ question.option_c }}</label>
+
+                <input type="radio" id="optionD" name="answer" value="D">
+                <label for="optionD">{{ question.option_d }}</label>
+            </div>
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <button type="submit">Submit Answer</button>
+        </form>
+    </div>
+</body>
+</html>
